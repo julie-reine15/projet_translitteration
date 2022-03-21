@@ -1,0 +1,18 @@
+Julie Bauné
+Yuliya Masalskaya
+
+
+La translittération des caractères cyrilliques russe aux caractères latins français.
+
+Le russe étant une langue un alphabet différent de celui du français. Il est alors souvent compliqué pour les personnes qui n'ont pas de connaissances en russe, ou une autre langue utilisant l'alphabet cyrillique, de lire les mots issues de cette langue.
+Pour pallier à ce problème, des règles ont été éditées, de façon à ce que les mots, phrases, et textes rédigés en cyrillique puissent être transformés et réécrits avec l'alphabet latin.
+
+Pour notre projet, nous allons nous appuyer sur un corpus de 10 000 phrases en russe, écrites en avec l'alphabet cyrillique tirées de pages wikipédia datant de 2021. 
+
+Pour que nos translittérations soient accessibles et lisible à tous et sans connaissances prériquises de l'API, nous avons décidé de suivre la norme BGN/CPGN (respectivement, US Board on Geographic Names et Comité permanent sur les noms géographiques). 
+Nous avons choisi cette norme car elle utilise uniquement des caractères latins simples que tout le monde peut lire. Nous allons également y effectuer quelques changements qui nous semble nécessaire en tant que bilingues français-russes pour rendre totalement accessible à tous nos translittérations.
+
+Pour générer notre translittération, nous allons nous appuyer sur un fichier de règles détaillant par quel(s) caractère(s) chaque caractère ou groupe de caractères devra être remplacé(s).
+Nous allons également générer une sortie correspondant aux règles de translitération ISO-9 pour pouvoir comparer les deux résultats. 
+
+Dans le cas où le temps restant nous le permet, nous essairons de mettre en place un test d'évaluation des résultats produient par le programme. Nous les ferons lire à plusieurs personnes pour déterminer qu'ils soient, comme nous le voulions, accessibles et lisibles par tous.

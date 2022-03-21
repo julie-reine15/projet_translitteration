@@ -1,0 +1,8 @@
+1 . construire le programme comme un package python avec dans l'appelle de la fonction de translitteration des paramètres laissant le choix à l'utilisateur de choisir sa norme de translitteration, s'il veut le résultat dans un fichier ou sur la console. 
+
+2 . stocker les règles de translitterations de chaque norme dans des fichiers txt ou tsv (➝ dans les 2 cas des fichiers simple à lire sur tout les OS et toutes les versions de python) 
+Dans le programme, le stockage des règles se feraient dans un distionnaire contenant comme clé le caractère cyrillique et en valeur le caractère latin correspondant, qui permettrait de faire les substitutions de caractères cyrilliques ➝ latin
+
+Si le temps nous le permet, faire un widget tkinter dans le style de google trad, où dans une fenêtre contenant 2 espaces l'utilisateur rentre lui même son texte en cyrillique dans le premier, appuie sur un bouton et dans le second, voit apparaitre le résultat de sa translittération
+
+
