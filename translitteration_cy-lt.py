@@ -1,5 +1,5 @@
 from collections import defaultdict, Counter, OrderedDict
-from nltk import ngrams, RegexpTokenizer
+from nltk import ngrams
 
 RULES_TXT = list
 NEW_FILE = ""
@@ -33,11 +33,12 @@ class Translitteration:
         global CHAR
         CHAR = list(ngrams(FILE, 1))
         i = 0
-        # print(FILE)
+        print(len(FILE))
 
         if output_file is None:
 
             while i < len(CHAR)-3:
+
 
                 three = "".join(CHAR[i] + CHAR[i + 1] + CHAR[i + 2])
                 # print(three)
@@ -46,42 +47,52 @@ class Translitteration:
                 one = "".join(CHAR[i])
 
                 if three in self.dico.keys():
+                    print(i, three)
                     new_char = self.dico.get(three)
                     # print("3. ok")
                     NEW_FILE += "".join(new_char)
                     # print(new_file)
                     i += 3
                 elif two in self.dico.keys():
+                    print(i, two)
                     new_char = self.dico.get(two)
                     # print("2. ok")
                     NEW_FILE += "".join(new_char)
                     # print(new_file)
                     i += 2
                 elif one in self.dico.keys():
+                    print(i, one)
                     new_char = self.dico.get(one)
                     # print("1. ok")
                     NEW_FILE += "".join(new_char)
                     # print(new_file)
                     i += 1
                 else:
-                    NEW_FILE += "".join(one)
+                    NEW_FILE += "".join(CHAR[i])
+                    print(i, "".join(CHAR[i]))
                     # print("4. pas ok")
                     i += 1
 
             if "".join(CHAR[i] + CHAR[i + 1] + CHAR[i + 2]) in self.dico.keys():
                 three = "".join(CHAR[i] + CHAR[i + 1] + CHAR[i + 2])
+                print(i, three)
                 new_char = self.dico.get(three)
                 NEW_FILE += "".join(new_char)
 
             elif "".join(CHAR[i] + CHAR[i + 1]) in self.dico.keys():
                 two = "".join(CHAR[i] + CHAR[i + 1])
+                print(i, two)
                 new_char = self.dico.get(two)
                 NEW_FILE += "".join(new_char)
 
             else:
                 for car in [CHAR[i], CHAR[i + 1], CHAR[i + 2]]:
-                    new_char = self.dico.get("".join(car))
-                    NEW_FILE += "".join(new_char)
+                    print(i, car)
+                    if "".join(car) in self.dico.keys():
+                        new_char = self.dico.get("".join(car))
+                        NEW_FILE += "".join(new_char)
+                    else:
+                        NEW_FILE += "".join(car)
 
             return NEW_FILE
 
@@ -137,7 +148,7 @@ class Translitteration:
             if both:
                 output_file.write(f"Texte original :\n{FILE}")
                 output_file.write("\n----------------------\n")
-                output_file.write(f"Texte translittérer :\n{NEW_FILE}")
+                output_file.write(f"Texte translittéré :\n{NEW_FILE}")
 
             elif not both:
                 output_file.write(f"Texte translittérer :\n{NEW_FILE}")
@@ -171,7 +182,7 @@ class Translitteration:
 
 
 t = Translitteration()
-t.translit_file_cy_lt("tweet_test_transli.txt", output_file="output_test_translit.txt", both=False)
-# tr = t.translit_file_cy_lt("tweet_test_transli.txt", output_file=None, both=False)
-# print(t.show_distribution(tr, is_file=True))
-print(t.show_distribution("output_test_translit.txt", is_file=True, file_output_distri="output_distri_transli.txt"))
+# t.translit_file_cy_lt("tweet_test_transli.txt", output_file="output_test_translit.txt", both=False)
+tr = t.translit_file_cy_lt("test.txt", output_file=None, both=False)
+print(t.show_distribution(tr, is_file=False))
+# print(t.show_distribution("output_test_translit.txt", is_file=True, file_output_distri="output_distri_transli.txt"))
