@@ -142,8 +142,12 @@ class Translitteration:
 
             else:
                 for car in [CHAR[i], CHAR[i + 1], CHAR[i + 2]]:
-                    new_char = self.dico.get("".join(car))
-                    NEW_FILE += "".join(new_char)
+                    print(i, car)
+                    if "".join(car) in self.dico.keys():
+                        new_char = self.dico.get("".join(car))
+                        NEW_FILE += "".join(new_char)
+                    else:
+                        NEW_FILE += "".join(car)
 
             if both:
                 output_file.write(f"Texte original :\n{FILE}")
