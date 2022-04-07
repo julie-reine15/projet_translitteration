@@ -72,18 +72,36 @@ class Translitteration:
                 new_char = self.dico.get(two)
                 NEW_FILE += "".join(new_char)
 
-            elif "".join(CHAR[i + 1] + CHAR[i + 2]) in self.dico.keys():
-                two = "".join(CHAR[i + 1] + CHAR[i + 2])
-                new_char = self.dico.get(two)
+            elif "".join(CHAR[i]) in self.dico.keys():
+                one = "".join(CHAR[i])
+                new_char = self.dico.get(one)
                 NEW_FILE += "".join(new_char)
 
+                if "".join(CHAR[i + 1] + CHAR[i + 2]) in self.dico.keys():
+                    two = "".join(CHAR[i + 1] + CHAR[i + 2])
+                    new_char = self.dico.get(two)
+                    NEW_FILE += "".join(new_char)
+                else:
+                    for car in [CHAR[i + 1], CHAR[i + 2]]:
+                        if "".join(car) in self.dico.keys():
+                            new_char = self.dico.get("".join(car))
+                            NEW_FILE += "".join(new_char)
+                        else:
+                            NEW_FILE += "".join(car)
             else:
-                for car in [CHAR[i], CHAR[i + 1], CHAR[i + 2]]:
-                    if "".join(car) in self.dico.keys():
-                        new_char = self.dico.get("".join(car))
-                        NEW_FILE += "".join(new_char)
-                    else:
-                        NEW_FILE += "".join(car)
+                NEW_FILE += "".join(CHAR[i])
+
+                if "".join(CHAR[i + 1] + CHAR[i + 2]) in self.dico.keys():
+                    two = "".join(CHAR[i + 1] + CHAR[i + 2])
+                    new_char = self.dico.get(two)
+                    NEW_FILE += "".join(new_char)
+                else:
+                    for car in [CHAR[i + 1], CHAR[i + 2]]:
+                        if "".join(car) in self.dico.keys():
+                            new_char = self.dico.get("".join(car))
+                            NEW_FILE += "".join(new_char)
+                        else:
+                            NEW_FILE += "".join(car)
 
             return NEW_FILE
 
@@ -131,18 +149,36 @@ class Translitteration:
                 new_char = self.dico.get(two)
                 NEW_FILE += "".join(new_char)
 
-            elif "".join(CHAR[i + 1] + CHAR[i + 2]) in self.dico.keys():
-                two = "".join(CHAR[i + 1] + CHAR[i + 2])
-                new_char = self.dico.get(two)
+            elif "".join(CHAR[i]) in self.dico.keys():
+                one = "".join(CHAR[i])
+                new_char = self.dico.get(one)
                 NEW_FILE += "".join(new_char)
 
+                if "".join(CHAR[i + 1] + CHAR[i + 2]) in self.dico.keys():
+                    two = "".join(CHAR[i + 1] + CHAR[i + 2])
+                    new_char = self.dico.get(two)
+                    NEW_FILE += "".join(new_char)
+                else:
+                    for car in [CHAR[i + 1], CHAR[i + 2]]:
+                        if "".join(car) in self.dico.keys():
+                            new_char = self.dico.get("".join(car))
+                            NEW_FILE += "".join(new_char)
+                        else:
+                            NEW_FILE += "".join(car)
             else:
-                for car in [CHAR[i], CHAR[i + 1], CHAR[i + 2]]:
-                    if "".join(car) in self.dico.keys():
-                        new_char = self.dico.get("".join(car))
-                        NEW_FILE += "".join(new_char)
-                    else:
-                        NEW_FILE += "".join(car)
+                NEW_FILE += "".join(CHAR[i])
+
+                if "".join(CHAR[i + 1] + CHAR[i + 2]) in self.dico.keys():
+                    two = "".join(CHAR[i + 1] + CHAR[i + 2])
+                    new_char = self.dico.get(two)
+                    NEW_FILE += "".join(new_char)
+                else:
+                    for car in [CHAR[i + 1], CHAR[i + 2]]:
+                        if "".join(car) in self.dico.keys():
+                            new_char = self.dico.get("".join(car))
+                            NEW_FILE += "".join(new_char)
+                        else:
+                            NEW_FILE += "".join(car)
 
             if both:
                 output_file.write(f"{FILE}")
