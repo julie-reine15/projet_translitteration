@@ -2,7 +2,7 @@ from collections import defaultdict, Counter, OrderedDict
 from nltk import ngrams
 
 RULES_TXT = list
-NEW_FILE = ""
+NEW_FILE = str()
 CHAR = list
 DISTRI = OrderedDict()
 FILE = str
@@ -26,68 +26,54 @@ class Translitteration:
     def translit_file_cy_lt(self, input_file, output_file=None, both=False):
 
         global FILE
-        FILE = open(input_file).read()
+        try:
+            FILE = open(input_file).read()
+        except FileNotFoundError:
+            FILE = input_file
 
         global NEW_FILE
 
         global CHAR
         CHAR = list(ngrams(FILE, 1))
+
         i = 0
-        print(len(FILE))
 
         if output_file is None:
 
             while i < len(CHAR)-3:
 
-
                 three = "".join(CHAR[i] + CHAR[i + 1] + CHAR[i + 2])
-                # print(three)
                 two = "".join(CHAR[i] + CHAR[i + 1])
-                # print(two)
                 one = "".join(CHAR[i])
 
                 if three in self.dico.keys():
-                    print(i, three)
                     new_char = self.dico.get(three)
-                    # print("3. ok")
                     NEW_FILE += "".join(new_char)
-                    # print(new_file)
                     i += 3
                 elif two in self.dico.keys():
-                    print(i, two)
                     new_char = self.dico.get(two)
-                    # print("2. ok")
                     NEW_FILE += "".join(new_char)
-                    # print(new_file)
                     i += 2
                 elif one in self.dico.keys():
-                    print(i, one)
                     new_char = self.dico.get(one)
-                    # print("1. ok")
                     NEW_FILE += "".join(new_char)
-                    # print(new_file)
                     i += 1
                 else:
                     NEW_FILE += "".join(CHAR[i])
-                    print(i, "".join(CHAR[i]))
-                    # print("4. pas ok")
                     i += 1
 
             if "".join(CHAR[i] + CHAR[i + 1] + CHAR[i + 2]) in self.dico.keys():
                 three = "".join(CHAR[i] + CHAR[i + 1] + CHAR[i + 2])
-                print(i, three)
                 new_char = self.dico.get(three)
                 NEW_FILE += "".join(new_char)
 
             elif "".join(CHAR[i] + CHAR[i + 1]) in self.dico.keys():
                 two = "".join(CHAR[i] + CHAR[i + 1])
-                print(i, two)
                 new_char = self.dico.get(two)
                 NEW_FILE += "".join(new_char)
 
             else:
                 for car in [CHAR[i], CHAR[i + 1], CHAR[i + 2]]:
-                    print(i, car)
                     if "".join(car) in self.dico.keys():
                         new_char = self.dico.get("".join(car))
                         NEW_FILE += "".join(new_char)
@@ -150,43 +136,36 @@ class Translitteration:
                         NEW_FILE += "".join(car)
 
             if both:
-                output_file.write(f"Texte original :\n{FILE}")
+                output_file.write(f"{FILE}")
                 output_file.write("\n----------------------\n")
-                output_file.write(f"Texte translittéré :\n{NEW_FILE}")
+                output_file.write(f"{NEW_FILE}")
 
             elif not both:
                 output_file.write(f"Texte translittérer :\n{NEW_FILE}")
 
-    def show_distribution(self, input_file, is_file=True, file_output_distri=None):
+    def show_distribution(self, input_file, file_output_distri=None):
 
         global FILE
         global DISTRI
 
-        if is_file:
+        try:
             FILE = open(input_file).read().split()
+        except FileNotFoundError:
+            FILE = input_file.split()
+            print(FILE)
+        finally:
             DISTRI = Counter(FILE)
 
-            if file_output_distri is None:
-                return DISTRI
-            else:
-                file_output_distri = open(file_output_distri, "w", encoding="UTF-8")
-                list_item = list(DISTRI.items())
-                for item in list_item[3:]:
-                    file_output_distri.write(f"{item[0]}\t{item[1]}\n")
+        if file_output_distri is None:
+            return DISTRI
         else:
-            FILE = str(input_file).split()
-            DISTRI = Counter(FILE)
-            if file_output_distri is None:
-                return DISTRI
-            else:
-                file_output_distri = open(file_output_distri, "w", encoding="UTF-8")
-                list_item = list(DISTRI.items())
-                for item in list_item[3:]:
-                    file_output_distri.write(f"{item[0]}\t{item[1]}\n")
+            file_output_distri = open(file_output_distri, "w", encoding="UTF-8")
+            for item in DISTRI.items():
+                file_output_distri.write(f"{item[0]}\t{item[1]}\n")
 
 
 t = Translitteration()
 # t.translit_file_cy_lt("tweet_test_transli.txt", output_file="output_test_translit.txt", both=False)
-tr = t.translit_file_cy_lt("test.txt", output_file=None, both=False)
-print(t.show_distribution(tr, is_file=False))
+tr = t.translit_file_cy_lt("привет", output_file=None, both=False)
+print(t.show_distribution(tr))
 # print(t.show_distribution("output_test_translit.txt", is_file=True, file_output_distri="output_distri_transli.txt"))
