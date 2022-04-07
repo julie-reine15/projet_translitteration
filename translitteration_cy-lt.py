@@ -72,6 +72,11 @@ class Translitteration:
                 new_char = self.dico.get(two)
                 NEW_FILE += "".join(new_char)
 
+            elif "".join(CHAR[i + 1] + CHAR[i + 2]) in self.dico.keys():
+                two = "".join(CHAR[i + 1] + CHAR[i + 2])
+                new_char = self.dico.get(two)
+                NEW_FILE += "".join(new_char)
+
             else:
                 for car in [CHAR[i], CHAR[i + 1], CHAR[i + 2]]:
                     if "".join(car) in self.dico.keys():
@@ -126,9 +131,13 @@ class Translitteration:
                 new_char = self.dico.get(two)
                 NEW_FILE += "".join(new_char)
 
+            elif "".join(CHAR[i + 1] + CHAR[i + 2]) in self.dico.keys():
+                two = "".join(CHAR[i + 1] + CHAR[i + 2])
+                new_char = self.dico.get(two)
+                NEW_FILE += "".join(new_char)
+
             else:
                 for car in [CHAR[i], CHAR[i + 1], CHAR[i + 2]]:
-                    print(i, car)
                     if "".join(car) in self.dico.keys():
                         new_char = self.dico.get("".join(car))
                         NEW_FILE += "".join(new_char)
@@ -152,16 +161,16 @@ class Translitteration:
             FILE = open(input_file).read().split()
         except FileNotFoundError:
             FILE = input_file.split()
-            print(FILE)
         finally:
-            DISTRI = Counter(FILE)
+            DISTRI = Counter([token for token in FILE if token.isalpha()])
 
         if file_output_distri is None:
             return DISTRI
         else:
             file_output_distri = open(file_output_distri, "w", encoding="UTF-8")
             for item in DISTRI.items():
-                file_output_distri.write(f"{item[0]}\t{item[1]}\n")
+                if item[0].isalpha():
+                    file_output_distri.write(f"{item[0]}\t{item[1]}\n")
 
 
 t = Translitteration()
