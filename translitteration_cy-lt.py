@@ -40,152 +40,40 @@ class Translitteration:
 
         if output_file is None:
 
-            while i < len(CHAR)-3:
+            while i < len(CHAR):
 
-                three = "".join(CHAR[i] + CHAR[i + 1] + CHAR[i + 2])
-                two = "".join(CHAR[i] + CHAR[i + 1])
                 one = "".join(CHAR[i])
-
-                if three in self.dico.keys():
-                    new_char = self.dico.get(three)
-                    NEW_FILE += "".join(new_char)
-                    i += 3
-                elif two in self.dico.keys():
-                    new_char = self.dico.get(two)
-                    NEW_FILE += "".join(new_char)
-                    i += 2
-                elif one in self.dico.keys():
+                try:
                     new_char = self.dico.get(one)
+                except TypeError:
+                    NEW_FILE += "".join(one)
+                else:
                     NEW_FILE += "".join(new_char)
+                finally:
                     i += 1
-                else:
-                    NEW_FILE += "".join(CHAR[i])
-                    i += 1
-
-            if "".join(CHAR[i] + CHAR[i + 1] + CHAR[i + 2]) in self.dico.keys():
-                three = "".join(CHAR[i] + CHAR[i + 1] + CHAR[i + 2])
-                new_char = self.dico.get(three)
-                NEW_FILE += "".join(new_char)
-
-            elif "".join(CHAR[i] + CHAR[i + 1]) in self.dico.keys():
-                two = "".join(CHAR[i] + CHAR[i + 1])
-                new_char = self.dico.get(two)
-                NEW_FILE += "".join(new_char)
-
-            elif "".join(CHAR[i]) in self.dico.keys():
-                one = "".join(CHAR[i])
-                new_char = self.dico.get(one)
-                NEW_FILE += "".join(new_char)
-
-                if "".join(CHAR[i + 1] + CHAR[i + 2]) in self.dico.keys():
-                    two = "".join(CHAR[i + 1] + CHAR[i + 2])
-                    new_char = self.dico.get(two)
-                    NEW_FILE += "".join(new_char)
-                else:
-                    for car in [CHAR[i + 1], CHAR[i + 2]]:
-                        if "".join(car) in self.dico.keys():
-                            new_char = self.dico.get("".join(car))
-                            NEW_FILE += "".join(new_char)
-                        else:
-                            NEW_FILE += "".join(car)
-            else:
-                NEW_FILE += "".join(CHAR[i])
-
-                if "".join(CHAR[i + 1] + CHAR[i + 2]) in self.dico.keys():
-                    two = "".join(CHAR[i + 1] + CHAR[i + 2])
-                    new_char = self.dico.get(two)
-                    NEW_FILE += "".join(new_char)
-                else:
-                    for car in [CHAR[i + 1], CHAR[i + 2]]:
-                        if "".join(car) in self.dico.keys():
-                            new_char = self.dico.get("".join(car))
-                            NEW_FILE += "".join(new_char)
-                        else:
-                            NEW_FILE += "".join(car)
-
             return NEW_FILE
 
         else:
             output_file = open(output_file, "w", encoding="UTF-8")
 
-            while i < len(CHAR) - 3:
+            while i < len(CHAR):
 
-                three = "".join(CHAR[i] + CHAR[i + 1] + CHAR[i + 2])
-                # print(three)
-                two = "".join(CHAR[i] + CHAR[i + 1])
-                # print(two)
                 one = "".join(CHAR[i])
-
-                if three in self.dico.keys():
-                    new_char = self.dico.get(three)
-                    # print("3. ok")
-                    NEW_FILE += "".join(new_char)
-                    # print(new_file)
-                    i += 3
-                elif two in self.dico.keys():
-                    new_char = self.dico.get(two)
-                    # print("2. ok")
-                    NEW_FILE += "".join(new_char)
-                    # print(new_file)
-                    i += 2
-                elif one in self.dico.keys():
+                try:
                     new_char = self.dico.get(one)
-                    # print("1. ok")
-                    NEW_FILE += "".join(new_char)
-                    # print(new_file)
-                    i += 1
-                else:
+                except TypeError:
                     NEW_FILE += "".join(one)
-                    # print("4. pas ok")
+                else:
+                    NEW_FILE += "".join(new_char)
+                finally:
                     i += 1
-
-            if "".join(CHAR[i] + CHAR[i + 1] + CHAR[i + 2]) in self.dico.keys():
-                three = "".join(CHAR[i] + CHAR[i + 1] + CHAR[i + 2])
-                new_char = self.dico.get(three)
-                NEW_FILE += "".join(new_char)
-
-            elif "".join(CHAR[i] + CHAR[i + 1]) in self.dico.keys():
-                two = "".join(CHAR[i] + CHAR[i + 1])
-                new_char = self.dico.get(two)
-                NEW_FILE += "".join(new_char)
-
-            elif "".join(CHAR[i]) in self.dico.keys():
-                one = "".join(CHAR[i])
-                new_char = self.dico.get(one)
-                NEW_FILE += "".join(new_char)
-
-                if "".join(CHAR[i + 1] + CHAR[i + 2]) in self.dico.keys():
-                    two = "".join(CHAR[i + 1] + CHAR[i + 2])
-                    new_char = self.dico.get(two)
-                    NEW_FILE += "".join(new_char)
-                else:
-                    for car in [CHAR[i + 1], CHAR[i + 2]]:
-                        if "".join(car) in self.dico.keys():
-                            new_char = self.dico.get("".join(car))
-                            NEW_FILE += "".join(new_char)
-                        else:
-                            NEW_FILE += "".join(car)
-            else:
-                NEW_FILE += "".join(CHAR[i])
-
-                if "".join(CHAR[i + 1] + CHAR[i + 2]) in self.dico.keys():
-                    two = "".join(CHAR[i + 1] + CHAR[i + 2])
-                    new_char = self.dico.get(two)
-                    NEW_FILE += "".join(new_char)
-                else:
-                    for car in [CHAR[i + 1], CHAR[i + 2]]:
-                        if "".join(car) in self.dico.keys():
-                            new_char = self.dico.get("".join(car))
-                            NEW_FILE += "".join(new_char)
-                        else:
-                            NEW_FILE += "".join(car)
 
             if both:
                 output_file.write(f"{FILE}")
                 output_file.write("\n----------------------\n")
                 output_file.write(f"{NEW_FILE}")
 
-            elif not both:
+            else:
                 output_file.write(f"Texte translittérer :\n{NEW_FILE}")
 
     def show_distribution(self, input_file, file_output_distri=None):
