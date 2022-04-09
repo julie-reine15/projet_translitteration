@@ -3,62 +3,85 @@ from nltk import ngrams
 
 
 class Translitteration:
+    """Class for transliterating from Russian into Latin alphabet on the basis of the rules"""
 
-    def rule_cy_lt(self):
+    def __init__(self):
 
-        file = open("regle_BGN.txt", encoding="utf-8").readlines()
+        global RULES_TXT
+        # Reading ile with transliteration rules
+        RULES_TXT = open("regle_BGN.txt", encoding='utf-8').readlines()
         rules = defaultdict(str)
 
-        for line in file:
+        for line in RULES_TXT:
             for rule in line.split("\n"):
                 if len(rule.split("\t")) > 1:
                     rules[rule.split("\t")[0]] = rule.split("\t")[1].strip("\n")
-        return rules
+
+        self.dico = rules
 
     def translit_file_cy_lt(self, input_text):
+
         output = ""
-        rules = self.rule_cy_lt()
-        char = list(ngrams(input_text, 1))
+        if "конечно" or "скучно" or "нарочно" or "что" or "чтобы" or "ничто" or "что-" or "-что" in input_text:
+            input_text.replace("конечно", "koneshno") or input_text.replace("скучно", "skushno") or \
+            input_text.replace("нарочно", "naroshno") or input_text.replace("что", "shto") or \
+            input_text.replace("чтобы", "shtoby") or input_text.replace("ничто", "nishto") or \
+            input_text.replace("что-", "shto-") or input_text.replace("-что", "-shto")
+
+        global CHAR
+        CHAR = list(ngrams(input_text, 1))
         i = 0
 
-        while i < len(char)-3:
+        while i < len(CHAR)-3:
+            # Reading characters in the Russian text
+            three = "".join(CHAR[i] + CHAR[i + 1] + CHAR[i + 2])
+            two = "".join(CHAR[i] + CHAR[i + 1])
+            one = "".join(CHAR[i])
 
-            three = "".join(char[i]+char[i+1]+char[i+2])
-            # print(three)
-            two = "".join(char[i]+char[i+1])
-            # print(two)
-            one = "".join(char[i])
-
-            if three in rules.keys():
-                new_char = rules.get(three)
-                # print("3. ok")
+            # Translating Russian characters
+            if three in self.dico.keys():
+                new_char = self.dico.get(three)
                 output += "".join(new_char)
-                # print(new_file)
                 i += 3
-            elif two in rules.keys():
-                new_char = rules.get(two)
+            elif two in self.dico.keys():
+                new_char = self.dico.get(two)
                 # print("2. ok")
                 output += "".join(new_char)
                 # print(new_file)
                 i += 2
-            elif one in rules.keys():
-                new_char = rules.get(one)
+            elif one in self.dico.keys():
+                new_char = self.dico.get(one)
                 # print("1. ok")
                 output += "".join(new_char)
                 # print(new_file)
                 i += 1
             else:
-                output += "".join(one)
-                # print("4. pas ok")
+                output += "".join(CHAR[i])
                 i += 1
-        # print(i)
-        two = "".join(char[i]+char[i+1])
-        if two in rules.keys():
-            output += "".join(rules.get(two))
-        elif char[i] and char[i+1] in rules.keys():
-            output += "".join(rules.get(char[i]))
-            output += "".join(rules.get(char[i+1]))
+
+        if "".join(CHAR[i] + CHAR[i + 1] + CHAR[i + 2]) in self.dico.keys():
+            three = "".join(CHAR[i] + CHAR[i + 1] + CHAR[i + 2])
+            new_char = self.dico.get(three)
+            output += "".join(new_char)
+
+        elif "".join(CHAR[i] + CHAR[i + 1]) in self.dico.keys():
+            two = "".join(CHAR[i] + CHAR[i + 1])
+            new_char = self.dico.get(two)
+            output += "".join(new_char)
+
         else:
-            output += "".join(two)
-        # output = texte.output_lat_text(output)
+            for car in [CHAR[i], CHAR[i + 1], CHAR[i + 2]]:
+                if "".join(car) in self.dico.keys():
+                    new_char = self.dico.get("".join(car))
+                    output += "".join(new_char)
+                else:
+                    output += "".join(car)
+
         return output
+
+
+if __name__ == "__main__":
+    russian_text = str(input("Your text : "))
+    t = Translitteration()
+    latin_chars = t.translit_file_cy_lt(russian_text)
+    print(latin_chars)
