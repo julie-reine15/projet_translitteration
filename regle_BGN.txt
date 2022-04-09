@@ -4,8 +4,6 @@
 б.	p.
 б,	p,
 в	v
-в.	f.
-в,	f,
 г	g
 г 	k
 г.	k.
@@ -15,6 +13,7 @@
 д 	t
 д.	t.
 д,	t,
+д	d
 е	ye
 ё	yo
 ж	j
@@ -30,7 +29,6 @@
 й	iy
 к	k
 л	l
-лнц	nts
 м	m
 н	n
 о	o
@@ -51,8 +49,6 @@
 х	kh
 ц	ts
 ч	tch
-чт	sht
-чн	shn
 ш	sh
 щ	shtch
 ы	y
